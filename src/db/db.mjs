@@ -1,29 +1,32 @@
-const db = [];
+const db = {
+  users: [],
+  boards: [],
+};
 
-function getAll() {
-  return db;
+function getAll(collection) {
+  return db[collection];
 }
 
-function findOne(param, paramName) {
-  return db.find((item) => item[paramName] === param);
+function findOne(collection, param, paramName) {
+  return db[collection].find((item) => item[paramName] === param);
 }
 
-function addItem(newItem) {
-  db.push(newItem);
+function addItem(collection, newItem) {
+  db[collection].push(newItem);
 }
 
-function findAndUpdate(param, paramName, newProperties) {
-  const item = findOne(param, paramName);
+function findAndUpdate(collection, param, paramName, newProperties) {
+  const item = findOne(collection, param, paramName);
 
   Object.assign(item, newProperties);
 
   return item;
 }
 
-function deleteOne(param, paramName) {
-  const index = db.findIndex((item) => item[paramName] === param);
+function deleteOne(collection, param, paramName) {
+  const index = db[collection].findIndex((item) => item[paramName] === param);
 
-  db.splice(index, 1);
+  db[collection].splice(index, 1);
 }
 
 export { getAll, findOne, addItem, findAndUpdate, deleteOne };
