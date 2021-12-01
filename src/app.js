@@ -1,24 +1,9 @@
-const express = require('express');
-const swaggerUI = require('swagger-ui-express');
-const path = require('path');
-const YAML = require('yamljs');
-const userRouter = require('./resources/users/user.router');
+import { createServer, listenServer } from './server/index.mjs';
+import { PORT, HOST } from './config/config.mjs';
+import { userRoutes } from './resources/users/user.router.mjs';
 
-const app = express();
-const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
+const server = createServer();
 
-app.use(express.json());
+server.register(userRoutes);
 
-app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
-
-app.use('/', (req, res, next) => {
-  if (req.originalUrl === '/') {
-    res.send('Service is running!');
-    return;
-  }
-  next();
-});
-
-app.use('/users', userRouter);
-
-module.exports = app;
+listenServer({ server, PORT, HOST });
