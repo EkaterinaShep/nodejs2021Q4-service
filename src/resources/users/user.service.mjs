@@ -1,5 +1,6 @@
 import { User } from './user.model.mjs';
 import * as userRepo from './user.repository.mjs';
+import * as taskRepo from '../tasks/task.repository.mjs';
 
 function getAllUsers() {
   return userRepo.getAllUsers();
@@ -25,6 +26,8 @@ function updateUser(id, newProperties) {
 
 function deleteUser(id) {
   userRepo.deleteUser(id);
+
+  taskRepo.updateTasks(id, { userId: null });
 }
 
 export { getAllUsers, getOneUser, addUser, updateUser, deleteUser };

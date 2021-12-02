@@ -42,7 +42,6 @@ function deleteBoard(req, reply) {
   boardService.deleteBoard(id);
 
   reply.code(codes.noContent).send();
-  console.log(reply.body);
 }
 
 export { getAllBoards, getOneBoard, addBoard, updateBoard, deleteBoard };

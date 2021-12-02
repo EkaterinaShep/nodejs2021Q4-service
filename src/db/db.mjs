@@ -1,9 +1,14 @@
 const db = {
   users: [],
   boards: [],
+  tasks: [],
 };
 
-function getAll(collection) {
+function getAll(collection, param, paramName) {
+  if (param) {
+    return db[collection].filter((item) => item[paramName] === param);
+  }
+
   return db[collection];
 }
 
@@ -23,10 +28,30 @@ function findAndUpdate(collection, param, paramName, newProperties) {
   return item;
 }
 
+function findAndUpdateMany(collection, param, paramName, newProperties) {
+  db[collection].forEach((item) => {
+    if (item[paramName] === param) {
+      Object.assign(item, newProperties);
+    }
+  });
+}
+
 function deleteOne(collection, param, paramName) {
   const index = db[collection].findIndex((item) => item[paramName] === param);
 
   db[collection].splice(index, 1);
 }
 
-export { getAll, findOne, addItem, findAndUpdate, deleteOne };
+function deleteMany(collection, param, paramName) {
+  db[collection] = db[collection].filter((item) => item[paramName] !== param);
+}
+
+export {
+  getAll,
+  findOne,
+  addItem,
+  findAndUpdate,
+  deleteOne,
+  deleteMany,
+  findAndUpdateMany,
+};
