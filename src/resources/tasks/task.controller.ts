@@ -1,5 +1,5 @@
-import * as taskService from './task.service.mjs';
-import { codes } from '../../constants/constants.mjs';
+import * as taskService from './task.service';
+import { codes } from '../../constants/constants';
 
 function getAllTasks(req, reply) {
   const { boardId } = req.params;

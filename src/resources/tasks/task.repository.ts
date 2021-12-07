@@ -1,4 +1,4 @@
-import * as db from '../../db/db.mjs';
+import * as db from '../../db/db';
 
 function getAllTasks(boardId) {
   return db.getAll('tasks', boardId, 'boardId');

@@ -1,5 +1,5 @@
-import * as taskController from './task.controller.mjs';
-import { taskSchema } from './task.schema.mjs';
+import * as taskController from './task.controller';
+import { taskSchema } from './task.schema';
 
 const taskRoutes = (server, opts, done) => {
   server.get('/boards/:boardId/tasks', taskController.getAllTasks);

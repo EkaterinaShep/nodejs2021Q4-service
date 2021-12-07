@@ -1,5 +1,5 @@
-import * as boardService from './board.service.mjs';
-import { codes } from '../../constants/constants.mjs';
+import * as boardService from './board.service';
+import { codes } from '../../constants/constants';
 
 function getAllBoards(req, reply) {
   const boards = boardService.getAllBoards();

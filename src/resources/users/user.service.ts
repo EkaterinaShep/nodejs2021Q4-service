@@ -1,6 +1,6 @@
-import { User } from './user.model.mjs';
-import * as userRepo from './user.repository.mjs';
-import * as taskRepo from '../tasks/task.repository.mjs';
+import { User } from './user.model';
+import * as userRepo from './user.repository';
+import * as taskRepo from '../tasks/task.repository';
 
 function getAllUsers() {
   return userRepo.getAllUsers();

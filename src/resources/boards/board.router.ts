@@ -1,5 +1,5 @@
-import * as boardController from './board.controller.mjs';
-import { boardSchema } from './board.schema.mjs';
+import * as boardController from './board.controller';
+import { boardSchema } from './board.schema';
 
 const boardRoutes = (server, opts, done) => {
   server.get('/boards', boardController.getAllBoards);

@@ -1,4 +1,4 @@
-import * as userController from './user.controller.mjs';
+import * as userController from './user.controller';
 
 const userRoutes = (server, opts, done) => {
   server.get('/users', userController.getAllUsers);

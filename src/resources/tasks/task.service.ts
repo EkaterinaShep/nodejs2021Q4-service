@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import * as taskRepo from './task.repository.mjs';
+import * as taskRepo from './task.repository';
 
 function getAllTasks(boardId) {
   return taskRepo.getAllTasks(boardId);
@@ -10,7 +10,7 @@ function getOneTask(id) {
 }
 
 function addTask(parsedReqBody, boardId) {
-  const task = Object.assign({ id: randomUUID() }, parsedReqBody, { boardId });
+  const task = {id: randomUUID(), ...parsedReqBody, boardId};
 
   taskRepo.addTask(task);
 

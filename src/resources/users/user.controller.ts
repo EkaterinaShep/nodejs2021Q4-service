@@ -1,5 +1,5 @@
-import * as userService from './user.service.mjs';
-import { codes } from '../../constants/constants.mjs';
+import * as userService from './user.service';
+import { codes } from '../../constants/constants';
 
 function getAllUsers(req, reply) {
   const users = userService.getAllUsers();
