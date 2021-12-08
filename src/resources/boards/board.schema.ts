@@ -5,7 +5,7 @@ const columnSchema = {
     title: { type: 'string' },
     order: { type: 'integer' },
   },
-};
+} as const;
 
 const boardBodySchema = {
   type: 'object',
@@ -17,7 +17,7 @@ const boardBodySchema = {
       items: columnSchema,
     },
   },
-};
+} as const;
 
 const boardParamsSchema = {
   type: 'object',
@@ -28,7 +28,7 @@ const boardParamsSchema = {
       format: 'uuid',
     },
   },
-};
+} as const;
 
 const boardResponseSchema = {
   '2xx': {
@@ -46,13 +46,12 @@ const boardResponseSchema = {
       },
     },
   },
-};
+} as const;
 
 const boardSchema = {
   body: boardBodySchema,
   params: boardParamsSchema,
   response: boardResponseSchema,
 };
-
 
 export { boardSchema };

@@ -1,23 +1,23 @@
 import * as db from '../../db/db';
-import { Board } from './board.types';
+import { BoardModel } from './board.types';
 
 function getAllBoards() {
   return db.getAll('boards');
 }
 
-function getOneBoard(id: Pick<Board, 'id'>) {
+function getOneBoard(id: string) {
   return db.findOne('boards', id, 'id');
 }
 
-function addBoard(board: Board) {
+function addBoard(board: BoardModel) {
   db.addItem('boards', board);
 }
 
-function updateBoard(id: Pick<Board, 'id'>, newProperties: Partial<Board>) {
+function updateBoard(id: string, newProperties: Partial<BoardModel>) {
   return db.findAndUpdate('boards', id, 'id', newProperties);
 }
 
-function deleteBoard(id: Pick<Board, 'id'>) {
+function deleteBoard(id: string) {
   db.deleteOne('boards', id, 'id');
 }
 

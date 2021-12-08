@@ -1,7 +1,8 @@
+import { FastifyPluginCallback } from 'fastify';
 import * as boardController from './board.controller';
 import { boardSchema } from './board.schema';
 
-const boardRoutes = (server, opts, done) => {
+const boardRoutes: FastifyPluginCallback = (server, _, done) => {
   server.get('/boards', boardController.getAllBoards);
 
   server.get(
