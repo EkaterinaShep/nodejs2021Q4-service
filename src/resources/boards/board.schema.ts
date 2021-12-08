@@ -54,4 +54,5 @@ const boardSchema = {
   response: boardResponseSchema,
 };
 
+
 export { boardSchema };
