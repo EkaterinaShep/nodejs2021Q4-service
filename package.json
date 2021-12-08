@@ -5,7 +5,6 @@
     "type": "git",
     "url": ""
   },
-  "type": "module",
   "description": "REST service: a competitor for Trello",
   "main": "src/server.js",
   "scripts": {

@@ -3,7 +3,7 @@
     "target": "es2020",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "module": "es2020",
+    "module": "commonjs",
     "rootDir": "./src",
     "moduleResolution": "node",
     "allowJs": false,
