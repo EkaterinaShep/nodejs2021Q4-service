@@ -1,7 +1,17 @@
+import { FastifyReply } from 'fastify';
 import * as taskService from './task.service';
 import { codes } from '../../constants/constants';
+import {
+  TaskBody,
+  TaskDeleteReq,
+  TaskGetAllReq,
+  TaskGetByIdReq,
+  TaskPostReq,
+  TaskPutReq,
+  TaskResponse,
+} from './task.types';
 
-function getAllTasks(req, reply) {
+function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
   const { boardId } = req.params;
 
   const tasks = taskService.getAllTasks(boardId);
@@ -9,10 +19,10 @@ function getAllTasks(req, reply) {
   reply.send(tasks);
 }
 
-function getOneTask(req, reply) {
+function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
-  const task = taskService.getOneTask(id);
+  const task: TaskResponse = taskService.getOneTask(id);
 
   if (!task) {
     reply.code(codes.notFound).send();
@@ -21,26 +31,27 @@ function getOneTask(req, reply) {
   reply.send(task);
 }
 
-function addTask(req, reply) {
+function addTask(req: TaskPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
   const { boardId } = req.params;
 
-  const task = taskService.addTask(parsedReqBody, boardId);
+  const task: TaskResponse = taskService.addTask(parsedReqBody, boardId);
 
   reply.code(codes.created).send(task);
 }
 
-function updateTask(req, reply) {
+function updateTask(req: TaskPutReq, reply: FastifyReply) {
   const id = req.params.taskId;
+
   const parsedReqBody = req.body;
 
-  const updatedTask = taskService.updateTask(id, parsedReqBody);
+  const updatedTask: TaskResponse = taskService.updateTask(id, parsedReqBody);
 
   reply.send(updatedTask);
 }
 
-function deleteTask(req, reply) {
+function deleteTask(req: TaskDeleteReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
   taskService.deleteTask(id);

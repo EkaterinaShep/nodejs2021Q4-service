@@ -1,21 +1,22 @@
+import { FastifyReply, FastifyRequest } from 'fastify';
 import * as userService from './user.service';
 import { codes } from '../../constants/constants';
 
-function getAllUsers(req, reply) {
+function getAllUsers(_req: FastifyRequest, reply: FastifyReply) {
   const users = userService.getAllUsers();
 
   reply.send(users);
 }
 
-function getOneUser(req, reply) {
+function getOneUser(req, reply: FastifyReply) {
   const id = req.params.userId;
-
+  console.log(req.params);
   const user = userService.getOneUser(id);
 
   reply.send(user);
 }
 
-function addUser(req, reply) {
+function addUser(req, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
   const user = userService.addUser(parsedReqBody);
@@ -23,7 +24,7 @@ function addUser(req, reply) {
   reply.code(codes.created).send(user);
 }
 
-function updateUser(req, reply) {
+function updateUser(req, reply: FastifyReply) {
   const id = req.params.userId;
   const parsedReqBody = req.body;
 
@@ -32,7 +33,7 @@ function updateUser(req, reply) {
   reply.send(updatedUser);
 }
 
-function deleteUser(req, reply) {
+function deleteUser(req, reply: FastifyReply) {
   const id = req.params.userId;
 
   userService.deleteUser(id);

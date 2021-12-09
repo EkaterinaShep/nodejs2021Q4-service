@@ -1,30 +1,31 @@
 import * as db from '../../db/db';
+import { TaskModel } from './task.types';
 
-function getAllTasks(boardId) {
+function getAllTasks(boardId: string) {
   return db.getAll('tasks', boardId, 'boardId');
 }
 
-function getOneTask(id) {
+function getOneTask(id: string) {
   return db.findOne('tasks', id, 'id');
 }
 
-function addTask(task) {
+function addTask(task: TaskModel) {
   db.addItem('tasks', task);
 }
 
-function updateTask(id, newProperties) {
+function updateTask(id: string, newProperties: Partial<TaskModel>) {
   return db.findAndUpdate('tasks', id, 'id', newProperties);
 }
 
-function deleteTask(id) {
+function deleteTask(id: string) {
   db.deleteOne('tasks', id, 'id');
 }
 
-function deleteTasks(boardId) {
+function deleteTasks(boardId: string) {
   db.deleteMany('tasks', boardId, 'boardId');
 }
 
-function updateTasks(userId, newIdProp) {
+function updateTasks(userId: string, newIdProp: string) {
   db.findAndUpdateMany('tasks', userId, 'userId', newIdProp);
 }
 

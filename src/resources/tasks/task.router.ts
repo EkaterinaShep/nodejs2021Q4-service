@@ -1,8 +1,13 @@
+import { FastifyPluginCallback } from 'fastify';
 import * as taskController from './task.controller';
 import { taskSchema } from './task.schema';
 
-const taskRoutes = (server, opts, done) => {
-  server.get('/boards/:boardId/tasks', taskController.getAllTasks);
+const taskRoutes: FastifyPluginCallback = (server, _opts, done) => {
+  server.get(
+    '/boards/:boardId/tasks',
+    { schema: { params: taskSchema.params } },
+    taskController.getAllTasks
+  );
 
   server.get(
     '/boards/:boardId/tasks/:taskId',
@@ -12,7 +17,7 @@ const taskRoutes = (server, opts, done) => {
 
   server.post(
     '/boards/:boardId/tasks',
-    { schema: { body: taskSchema.body, response: taskSchema.response } },
+    { schema: { body: taskSchema.body, params: taskSchema.params, response: taskSchema.response } },
     taskController.addTask
   );
 

@@ -15,18 +15,22 @@ const taskBodySchema = {
       oneOf: [{ type: 'string', format: 'uuid' }, { type: 'null' }],
     },
   },
-};
+} as const;
 
 const taskParamsSchema = {
   type: 'object',
-  required: ['taskId'],
+  required: ['boardId'],
   properties: {
+    boardId: {
+      type: 'string',
+      format: 'uuid',
+    },
     taskId: {
       type: 'string',
       format: 'uuid',
     },
   },
-};
+} as const;
 
 const taskResponseSchema = {
   '2xx': {
@@ -51,7 +55,7 @@ const taskResponseSchema = {
       },
     },
   },
-};
+} as const;
 
 const taskSchema = {
   body: taskBodySchema,
