@@ -6,19 +6,18 @@ import {
   BoardGetByIdReq,
   BoardPostReq,
   BoardPutReq,
-  BoardResponse,
 } from './board.types';
 
 function getAllBoards(_req: FastifyRequest, reply: FastifyReply) {
-  const boards: Array<BoardResponse> = boardService.getAllBoards();
+  const boards = boardService.getAllBoards();
 
   reply.send(boards);
 }
 
 function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
-  const boardId = req.params.boardId;
+  const {boardId} = req.params;
 
-  const board: BoardResponse = boardService.getOneBoard(boardId);
+  const board = boardService.getOneBoard(boardId);
 
   if (board) {
     reply.send(board);
@@ -30,7 +29,7 @@ function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
 function addBoard(req: BoardPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
-  const board: BoardResponse = boardService.addBoard(parsedReqBody);
+  const board = boardService.addBoard(parsedReqBody);
 
   reply.code(codes.created).send(board);
 }
@@ -39,10 +38,7 @@ function updateBoard(req: BoardPutReq, reply: FastifyReply) {
   const id = req.params.boardId;
   const parsedReqBody = req.body;
 
-  const updatedBoard: BoardResponse = boardService.updateBoard(
-    id,
-    parsedReqBody
-  );
+  const updatedBoard = boardService.updateBoard(id, parsedReqBody);
 
   reply.send(updatedBoard);
 }

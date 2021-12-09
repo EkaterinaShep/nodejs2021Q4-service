@@ -19,13 +19,24 @@ const taskBodySchema = {
 
 const taskParamsSchema = {
   type: 'object',
-  required: ['boardId'],
+  required: ['boardId', 'taskId'],
   properties: {
     boardId: {
       type: 'string',
       format: 'uuid',
     },
     taskId: {
+      type: 'string',
+      format: 'uuid',
+    },
+  },
+} as const;
+
+const taskParamsWithoutTaskIdSchema = {
+  type: 'object',
+  required: ['boardId'],
+  properties: {
+    boardId: {
       type: 'string',
       format: 'uuid',
     },
@@ -63,4 +74,4 @@ const taskSchema = {
   response: taskResponseSchema,
 };
 
-export { taskSchema };
+export { taskSchema, taskParamsWithoutTaskIdSchema };

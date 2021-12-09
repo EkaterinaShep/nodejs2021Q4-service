@@ -17,7 +17,13 @@ const taskRoutes: FastifyPluginCallback = (server, _opts, done) => {
 
   server.post(
     '/boards/:boardId/tasks',
-    { schema: { body: taskSchema.body, params: taskSchema.params, response: taskSchema.response } },
+    {
+      schema: {
+        body: taskSchema.body,
+        params: taskSchema.params,
+        response: taskSchema.response,
+      },
+    },
     taskController.addTask
   );
 

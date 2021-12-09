@@ -2,13 +2,11 @@ import { FastifyReply } from 'fastify';
 import * as taskService from './task.service';
 import { codes } from '../../constants/constants';
 import {
-  TaskBody,
   TaskDeleteReq,
   TaskGetAllReq,
   TaskGetByIdReq,
   TaskPostReq,
   TaskPutReq,
-  TaskResponse,
 } from './task.types';
 
 function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
@@ -22,7 +20,7 @@ function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
 function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
-  const task: TaskResponse = taskService.getOneTask(id);
+  const task = taskService.getOneTask(id);
 
   if (!task) {
     reply.code(codes.notFound).send();
@@ -36,7 +34,7 @@ function addTask(req: TaskPostReq, reply: FastifyReply) {
 
   const { boardId } = req.params;
 
-  const task: TaskResponse = taskService.addTask(parsedReqBody, boardId);
+  const task = taskService.addTask(parsedReqBody, boardId);
 
   reply.code(codes.created).send(task);
 }
@@ -46,7 +44,7 @@ function updateTask(req: TaskPutReq, reply: FastifyReply) {
 
   const parsedReqBody = req.body;
 
-  const updatedTask: TaskResponse = taskService.updateTask(id, parsedReqBody);
+  const updatedTask = taskService.updateTask(id, parsedReqBody);
 
   reply.send(updatedTask);
 }

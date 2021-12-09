@@ -25,7 +25,7 @@ function deleteTasks(boardId: string) {
   db.deleteMany('tasks', boardId, 'boardId');
 }
 
-function updateTasks(userId: string, newIdProp: string) {
+function updateTasks(userId: string, newIdProp: {userId: null}) {
   db.findAndUpdateMany('tasks', userId, 'userId', newIdProp);
 }
 

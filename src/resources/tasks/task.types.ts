@@ -1,16 +1,17 @@
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
 import { taskModelSchema } from './task.model';
-import { taskSchema } from './task.schema';
+import { taskParamsWithoutTaskIdSchema, taskSchema } from './task.schema';
 
 type TaskModel = FromSchema<typeof taskModelSchema>;
 type TaskBody = FromSchema<typeof taskSchema.body>;
 type TaskParams = FromSchema<typeof taskSchema.params>;
+type TaskParamsWithoutTaskId = FromSchema<typeof taskParamsWithoutTaskIdSchema>;
 type TaskResponse = FromSchema<typeof taskSchema.response['2xx']>;
 
 type TaskPostReq = FastifyRequest<{
   Body: TaskBody;
-  Params: TaskParams;
+  Params: TaskParamsWithoutTaskId;
 }>;
 
 type TaskPutReq = FastifyRequest<{
@@ -23,7 +24,7 @@ type TaskGetByIdReq = FastifyRequest<{
 }>;
 
 type TaskGetAllReq = FastifyRequest<{
-  Params: TaskParams;
+  Params: TaskParamsWithoutTaskId;
 }>;
 
 type TaskDeleteReq = FastifyRequest<{
