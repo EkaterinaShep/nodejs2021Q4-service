@@ -29,7 +29,7 @@ const boardRoutes: FastifyPluginCallback = (server, _opts, done) => {
     boardController.updateBoard
   );
 
-  server.delete(
+  server["delete"](
     '/boards/:boardId',
     { schema: { params: boardSchema.params } },
     boardController.deleteBoard

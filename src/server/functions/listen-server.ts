@@ -1,9 +1,20 @@
-import { ServerOpts } from '../types';
+import { FastifyInstance } from 'fastify';
 
-function listenServer(serverOpts: ServerOpts) {
-  serverOpts.server.listen(serverOpts.PORT, serverOpts.HOST, (err, address) => {
+/**
+ * Starts the server on the given port and host
+ *
+ * @param server - Fastify instance server
+ * @param port - custom port value
+ * @param host - custom host value
+ */
+function listenServer(
+  server: FastifyInstance,
+  port: string | number,
+  host: string
+) {
+  server.listen(port, host, (err, address) => {
     if (err) {
-      serverOpts.server.log.error(err);
+      server.log.error(err);
       process.exit(1);
     }
 

@@ -10,4 +10,4 @@ server.register(userRoutes);
 server.register(boardRoutes);
 server.register(taskRoutes);
 
-listenServer({ server, PORT, HOST });
+listenServer(server, PORT, HOST);
