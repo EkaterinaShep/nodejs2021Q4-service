@@ -13,7 +13,7 @@ const db: DB = {
  * @param fieldValue - value of the field by which selection of collection's items should take place
  * @param fieldName - name of the field by which selection of collection's items should take place
  *
- * @returns Array that holds all items in the specified collection or items that satisfies the specified query or undefined
+ * @returns Array that holds all items in specified collection or items that satisfies specified query
  */
 function getAll(
   collection: Collection,
@@ -30,13 +30,13 @@ function getAll(
 }
 
 /**
- * Returns one item that satisfies the specified query criteria on the specified collection
+ * Returns one item that satisfies specified query criteria on specified collection
  *
  * @param collection - name of the collection. The method accepts one of the {@link Collection}'s members
  * @param fieldValue - value of the field by which search should take place
  * @param fieldName - name of the field by which search should take place
  *
- * @returns One item that satisfies the specified query criteria or undefined. If multiple items satisfy the query, the method returns the first item satisfied the query
+ * @returns One item that satisfies specified query criteria or undefined. If multiple items satisfy the query, the method returns the first item satisfied the query
  */
 function findOne(
   collection: Collection,
@@ -49,7 +49,7 @@ function findOne(
 }
 
 /**
- *  Adds an item to the specified collection
+ *  Adds an item to specified collection
  *
  * @param collection - name of the collection. The method accepts one of the {@link Collection}'s members
  * @param newItem - item that should be added to the collection. The type of the item is one of the {@link Item}'s members
@@ -103,7 +103,7 @@ function findAndUpdateMany(
 }
 
 /**
- * Deletes an items from the specified collection
+ * Deletes an items from specified collection
  *
  * @param collection - name of the collection. The method accepts one of the {@link Collection}'s members
  * @param fieldValue - value of the field that has the target item
@@ -122,7 +122,7 @@ function deleteOne(
 }
 
 /**
- * Deletes items that satisfies the specified query criteria from the specified collection
+ * Deletes items that satisfies specified query criteria from specified collection
  *
  * @param collection - name of the collection. The method accepts one of the {@link Collection}'s members
  * @param fieldValue - value of the field that has the target items

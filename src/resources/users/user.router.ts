@@ -2,6 +2,13 @@ import { FastifyPluginCallback } from 'fastify';
 import * as userController from './user.controller';
 import { userSchema } from './user.schema';
 
+/**
+ * Creates a set of routes for User endpoint
+ *
+ * @param server - Fastify server instance
+ * @param _opts - object of options
+ * @param done - done callback
+ */
 const userRoutes: FastifyPluginCallback = (server, _opts, done) => {
   server.get('/users', userController.getAllUsers);
 
@@ -29,7 +36,7 @@ const userRoutes: FastifyPluginCallback = (server, _opts, done) => {
     userController.updateUser
   );
 
-  server["delete"](
+  server['delete'](
     '/users/:userId',
     { schema: { params: userSchema.params } },
     userController.deleteUser
