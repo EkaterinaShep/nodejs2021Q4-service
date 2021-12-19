@@ -21,6 +21,7 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
     "noPropertyAccessFromIndexSignature": true,
+    "noImplicitAny": true,
     "skipLibCheck": true
   },
   "exclude": ["./node_modules"]
