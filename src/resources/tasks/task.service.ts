@@ -51,7 +51,7 @@ function updateTask(id: string, newProperties: TaskBody) {
 }
 
 /**
- * Sends request to a task repository for removal a task with specified ID from the database
+ * Sends request to a task repository for deletion a task with specified ID from the database
  *
  * @param id - id of the target task
  */

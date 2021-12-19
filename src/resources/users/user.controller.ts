@@ -35,7 +35,7 @@ function getOneUser(req: UserGetByIdReq, reply: FastifyReply) {
 }
 
 /**
- * Sends received from post request body to a user service. Replies on the request setting the status code to 201 and sending one user added to the database and received from the task service
+ * Sends received from post request body to a user service. Replies on the request setting the status code to 201 and sending one user added to the database and received from the user service
  *
  * @param req - Fastify Request object with type {@link UserPostReq}
  * @param reply - Fastify Reply object

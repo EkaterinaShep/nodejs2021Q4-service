@@ -7,7 +7,7 @@ const db: DB = {
 };
 
 /**
- * Returns all or some, satisfied a name-value pair, items of one of the collections stored in database
+ * Returns all or some, satisfied specified query criteria, items of one of the collections stored in the database
  *
  * @param collection - name of the collection. The method accepts one of the {@link Collection}'s members
  * @param fieldValue - value of the field by which selection of collection's items should take place
