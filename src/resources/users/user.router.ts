@@ -36,7 +36,7 @@ const userRoutes: FastifyPluginCallback = (server, _opts, done) => {
     userController.updateUser
   );
 
-  server['delete'](
+  server.delete(
     '/users/:userId',
     { schema: { params: userSchema.params } },
     userController.deleteUser

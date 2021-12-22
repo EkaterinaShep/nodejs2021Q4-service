@@ -46,7 +46,7 @@ const taskRoutes: FastifyPluginCallback = (server, _opts, done) => {
     taskController.updateTask
   );
 
-  server['delete'](
+  server.delete(
     '/boards/:boardId/tasks/:taskId',
     { schema: { params: taskSchema.params } },
     taskController.deleteTask
