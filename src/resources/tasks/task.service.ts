@@ -1,4 +1,5 @@
 import { randomUUID } from 'crypto';
+import { NotFoundError } from '../../errors/custom-errors';
 import * as taskRepo from './task.repository';
 import { TaskBody, TaskModel } from './task.types';
 
@@ -16,10 +17,19 @@ function getAllTasks(boardId: string) {
  * Returns a task with given ID received from a task repository
  *
  * @param id - id of the target task item
- * @returns Object with the type {@link TaskModel} that has specified ID. If there isn't a task with given ID, the method returns undefined
+ * @returns Object with the type {@link TaskModel} that has specified ID
+ *
+ * @throws {@link NotFoundError}
+ * Thrown if there isn't a task with given ID
  */
 function getOneTask(id: string) {
-  return taskRepo.getOneTask(id);
+  const task = taskRepo.getOneTask(id);
+
+  if (!task) {
+    throw new NotFoundError(`task with id '${id}' was not found`);
+  }
+
+  return task;
 }
 
 /**

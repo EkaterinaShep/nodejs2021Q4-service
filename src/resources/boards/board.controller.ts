@@ -21,7 +21,7 @@ function getAllBoards(_req: FastifyRequest, reply: FastifyReply) {
 }
 
 /**
- * Replies on a get request setting the status code to 200 and sending one board received from a board service. If there isn't the board in the database, the method returns 404 status code
+ * Replies on a get request setting the status code to 200 and sending one board received from a board service
  *
  * @param req - Fastify Request object with type {@link BoardGetByIdReq}
  * @param reply - Fastify Reply object
@@ -31,11 +31,7 @@ function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
 
   const board = boardService.getOneBoard(boardId);
 
-  if (board) {
-    reply.send(board);
-  }
-
-  reply.code(codes.notFound).send();
+  reply.send(board);
 }
 
 /**

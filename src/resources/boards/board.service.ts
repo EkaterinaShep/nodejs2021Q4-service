@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto';
 import * as boardRepo from './board.repository';
 import * as taskRepo from '../tasks/task.repository';
 import { BoardBody } from './board.types';
+import { NotFoundError } from '../../errors/custom-errors';
 
 /**
  * Returns all board items received from a board repository
@@ -16,11 +17,19 @@ function getAllBoards() {
  * Returns a board item with given ID received from a board repository
  *
  * @param id - id of the target board item
+ * @returns Object with the type {@link BoardModel} that has specified ID.
  *
- * @returns Object with the type {@link BoardModel} that has specified ID. If there isn't a board item with given ID, the method returns undefined
+ * @throws {@link NotFoundError}
+ * Thrown if there isn't a board item with given ID
  */
 function getOneBoard(id: string) {
-  return boardRepo.getOneBoard(id);
+  const board = boardRepo.getOneBoard(id);
+
+  if (!board) {
+    throw new NotFoundError(`board with id '${id}' was not found`);
+  }
+
+  return board;
 }
 
 /**

@@ -1,4 +1,5 @@
 import { FastifyInstance } from 'fastify';
+import { logFatalError } from '../../logging';
 
 /**
  * Starts the server on the given port and host
@@ -14,7 +15,7 @@ function listenServer(
 ) {
   server.listen(port, host, (err, address) => {
     if (err) {
-      server.log.error(err);
+      logFatalError(server, err);
       process.exit(1);
     }
 

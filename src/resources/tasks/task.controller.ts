@@ -24,7 +24,7 @@ function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
 }
 
 /**
- * Replies on a get request setting the status code to 200 and sending one task received from a task service. If there isn't the task in the database, the method returns 404 status code
+ * Replies on a get request setting the status code to 200 and sending one task received from a task service
  *
  * @param req - Fastify Request object with type {@link TaskGetByIdReq}
  * @param reply - Fastify Reply object
@@ -33,10 +33,6 @@ function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
   const task = taskService.getOneTask(id);
-
-  if (!task) {
-    reply.code(codes.notFound).send();
-  }
 
   reply.send(task);
 }
