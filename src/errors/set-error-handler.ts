@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { logAppError } from '../logging';
-import { CustomError } from './custom-errors';
+import { CustomError } from './custom-errors/custom-error';
 
 function setErrorHandler(server: FastifyInstance) {
   server.setErrorHandler((err, _req, reply) => {

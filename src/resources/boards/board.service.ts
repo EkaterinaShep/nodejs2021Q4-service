@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import * as boardRepo from './board.repository';
 import * as taskRepo from '../tasks/task.repository';
 import { BoardBody } from './board.types';
-import { NotFoundError } from '../../errors/custom-errors';
+import { NotFoundError } from '../../errors/custom-errors/not-found-error';
 
 /**
  * Returns all board items received from a board repository

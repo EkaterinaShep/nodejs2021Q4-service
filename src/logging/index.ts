@@ -30,6 +30,21 @@ const loggerOpts = {
 } as FastifyLoggerOptions;
 
 /* ---------------------------- Logging functions --------------------------- */
+function logErrToErrFileSync(content: string) {
+  if (Number(LOG_LEVEL) !== 0) {
+    fs.writeFileSync(ERR_FILE_PATH, content, {
+      flag: 'a',
+    });
+  }
+}
+
+function logErrToErrFileAsync(content: string) {
+  const stream = fs.createWriteStream(ERR_FILE_PATH, { flags: 'a' });
+
+  stream.write(content);
+  stream.end();
+}
+
 function addReqLogging(server: FastifyInstance) {
   server.addHook('preHandler', (req, _reply, done) => {
     const { method, url, params, body, query } = req;
@@ -65,7 +80,7 @@ function logAppError(
   err: FastifyError,
   reply: FastifyReply
 ) {
-  const statusCode = reply.statusCode;
+  const { statusCode } = reply;
   const message = `${err.name}: ${err.message}`;
 
   if (statusCode >= 400 && statusCode < 500) {
@@ -81,21 +96,6 @@ function logAppError(
       `[${formatDateTime(new Date())}]: ERROR: ${message}\n`
     );
   }
-}
-
-function logErrToErrFileSync(content: string) {
-  if (Number(LOG_LEVEL) !== 0) {
-    fs.writeFileSync(ERR_FILE_PATH, content, {
-      flag: 'a',
-    });
-  }
-}
-
-function logErrToErrFileAsync(content: string) {
-  const stream = fs.createWriteStream(ERR_FILE_PATH, { flags: 'a' });
-
-  stream.write(content);
-  stream.end();
 }
 
 export {

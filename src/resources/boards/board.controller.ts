@@ -42,7 +42,6 @@ function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
  */
 function addBoard(req: BoardPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
-  throw new Error('fjdkjfkdjfkdj');
 
   const board = boardService.addBoard(parsedReqBody);
 

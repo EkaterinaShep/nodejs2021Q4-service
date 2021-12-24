@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { NotFoundError } from '../../errors/custom-errors';
+import { NotFoundError } from '../../errors/custom-errors/not-found-error';
 import * as taskRepo from './task.repository';
 import { TaskBody, TaskModel } from './task.types';
 

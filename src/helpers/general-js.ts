@@ -1,12 +1,4 @@
 /* ------------------------ Date and time formatting ------------------------ */
-function formatDateTime(dateTime: Date) {
-  const dateParts = getDateTimeParts(dateTime);
-  const date = getDate(dateParts);
-  const time = getTime(dateParts, dateTime);
-  const timeZoneOffset = getTimezoneOffset(dateTime);
-
-  return `${date} ${time} ${timeZoneOffset}`;
-}
 
 function getDateTimeParts(dateTime: Date) {
   return new Intl.DateTimeFormat('en', {
@@ -28,7 +20,7 @@ function getTime(dateParts: Intl.DateTimeFormatPart[], dateTime: Date) {
   const hour = dateParts.find((part) => part.type === 'hour')?.value || '';
   const minute = dateParts.find((part) => part.type === 'minute')?.value || '';
   const second = dateParts.find((part) => part.type === 'second')?.value || '';
-  const millisecond = dateTime.getMilliseconds().toString().padStart(3, "0");
+  const millisecond = dateTime.getMilliseconds().toString().padStart(3, '0');
 
   return `${hour}:${minute}:${second}.${millisecond}`;
 }
@@ -40,6 +32,15 @@ function getTimezoneOffset(dateTime: Date) {
   return `${sign}${timeZoneOffset < 10 ? '0' : ''}${Math.abs(
     timeZoneOffset
   )}`.padEnd(5, '0');
+}
+
+function formatDateTime(dateTime: Date) {
+  const dateParts = getDateTimeParts(dateTime);
+  const date = getDate(dateParts);
+  const time = getTime(dateParts, dateTime);
+  const timeZoneOffset = getTimezoneOffset(dateTime);
+
+  return `${date} ${time} ${timeZoneOffset}`;
 }
 
 export { formatDateTime };
