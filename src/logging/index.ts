@@ -1,15 +1,23 @@
+import fs from 'fs';
 import {
   FastifyError,
   FastifyInstance,
   FastifyLoggerOptions,
   FastifyReply,
 } from 'fastify';
+import {
+  ALL_LOG_DATA_FILE_PATH,
+  ERR_FILE_PATH,
+  LOG_LEVEL,
+  LOG_LEVEL_NAME,
+} from '../config/config';
+import { formatDateTime } from '../helpers/general-js';
 
 /* ----------------------------- Logger options ----------------------------- */
 const loggerOpts = {
   logger: {
-    level: 'trace',
-    file: 'all-data.log',
+    level: LOG_LEVEL_NAME,
+    file: ALL_LOG_DATA_FILE_PATH,
     prettyPrint: {
       colorize: false,
       ignore: 'pid,hostname,reqId',
@@ -46,7 +54,10 @@ function addResponseLogging(server: FastifyInstance) {
 }
 
 function logFatalError(server: FastifyInstance, err: Error) {
-  server.log.fatal(`${err.name}: ${err.message}`);
+  const message = `${err.name}: ${err.message}`;
+
+  server.log.fatal(message);
+  logErrToErrFileAsync(`[${formatDateTime(new Date())}]: FATAL: ${message}\n`);
 }
 
 function logAppError(
@@ -55,13 +66,36 @@ function logAppError(
   reply: FastifyReply
 ) {
   const statusCode = reply.statusCode;
+  const message = `${err.name}: ${err.message}`;
 
   if (statusCode >= 400 && statusCode < 500) {
-    server.log.info(`${err.name}: ${err.message}`);
+    server.log.info(message);
+
     return;
   }
 
-  server.log.error(`${err.name}: ${err.message}`);
+  server.log.error(message);
+
+  if (Number(LOG_LEVEL) !== 0) {
+    logErrToErrFileAsync(
+      `[${formatDateTime(new Date())}]: ERROR: ${message}\n`
+    );
+  }
+}
+
+function logErrToErrFileSync(content: string) {
+  if (Number(LOG_LEVEL) !== 0) {
+    fs.writeFileSync(ERR_FILE_PATH, content, {
+      flag: 'a',
+    });
+  }
+}
+
+function logErrToErrFileAsync(content: string) {
+  const stream = fs.createWriteStream(ERR_FILE_PATH, { flags: 'a' });
+
+  stream.write(content);
+  stream.end();
 }
 
 export {
@@ -70,4 +104,5 @@ export {
   addResponseLogging,
   logFatalError,
   logAppError,
+  logErrToErrFileSync,
 };

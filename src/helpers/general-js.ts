@@ -28,7 +28,7 @@ function getTime(dateParts: Intl.DateTimeFormatPart[], dateTime: Date) {
   const hour = dateParts.find((part) => part.type === 'hour')?.value || '';
   const minute = dateParts.find((part) => part.type === 'minute')?.value || '';
   const second = dateParts.find((part) => part.type === 'second')?.value || '';
-  const millisecond = dateTime.getMilliseconds();
+  const millisecond = dateTime.getMilliseconds().toString().padStart(3, "0");
 
   return `${hour}:${minute}:${second}.${millisecond}`;
 }
