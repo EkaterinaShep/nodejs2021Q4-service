@@ -4,7 +4,7 @@ import { logErrToErrFileSync } from '../logging';
 function handleUncaughtExceptions() {
   process.on('uncaughtException', (err) => {
     const formattedDateTime = formatDateTime(new Date());
-    const message = `[${formattedDateTime}] ${err.name}: ${err.message}\n`;
+    const message = `[${formattedDateTime}] ERROR: ${err.name}: ${err.message}\n`;
 
     logErrToErrFileSync(message);
 
