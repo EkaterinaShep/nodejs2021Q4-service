@@ -7,8 +7,8 @@ dotenv.config();
 
 const PORT = process.env['PORT'] || 4000;
 const HOST = process.env['HOST'] || '127.0.0.1';
-const ERR_FILE_PATH = path.resolve(__dirname, '../../err-data.log');
-const ALL_LOG_DATA_FILE_PATH = path.resolve(__dirname, '../../all-data.log');
+const ERR_FILE_PATH = path.resolve(__dirname, '../../logs/err.log');
+const ALL_LOG_DATA_FILE_PATH = path.resolve(__dirname, '../../logs/all.log');
 const LOG_LEVEL =
   (process.env['LOG_LEVEL'] as unknown as keyof typeof logLevels) || '5';
 const LOG_LEVEL_NAME = logLevels[LOG_LEVEL];

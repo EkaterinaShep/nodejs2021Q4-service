@@ -10,6 +10,7 @@ import { handleUnhandledRejection } from './errors/handle-unhandled-rejection';
 
 handleUncaughtExceptions();
 handleUnhandledRejection();
+throw Error('Oops!');
 
 const server = createServer(loggerOpts);
 
