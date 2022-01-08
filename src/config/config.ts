@@ -6,7 +6,7 @@ import { logLevels } from '../constants/constants';
 dotenv.config();
 
 const PORT = process.env['PORT'] || 4000;
-const HOST = process.env['HOST'] || '127.0.0.1';
+const HOST = process.env['HOST'] || '0.0.0.0';
 const ERR_FILE_PATH = path.resolve(__dirname, '../../logs/err.log');
 const ALL_LOG_DATA_FILE_PATH = path.resolve(__dirname, '../../logs/all.log');
 const LOG_LEVEL =
