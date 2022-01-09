@@ -28,11 +28,12 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
     volumes:
-      - ./db:/usr/src/app/db
+      - db-data:/var/lib/postgresql/data
     networks:
       - user-defined
     restart: on-failure
-# volumes:
+volumes:
+    db-data:
 #   nodemodules: {}
 networks:
   user-defined:
