@@ -13,7 +13,7 @@ services:
       - HOST=${HOST}
     volumes:
       #- nodemodules:/usr/src/app/node_modules
-      - ./logs:/usr/src/app/logs
+      - logs:/usr/src/app/logs
       - ./src:/usr/src/app/src
     networks:
       - user-defined
@@ -34,6 +34,7 @@ services:
     restart: on-failure
 volumes:
     db-data:
+    logs:
 #   nodemodules: {}
 networks:
   user-defined:
