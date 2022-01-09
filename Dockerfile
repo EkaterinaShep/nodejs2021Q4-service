@@ -12,5 +12,6 @@ COPY --from=builder /usr/src/app/node_modules ./node_modules
 RUN npm i -g nodemon && npm i -g typescript
 COPY --from=builder /usr/src/app/build ./build
 COPY --from=builder /usr/src/app/logs ./logs
+COPY --from=builder /usr/src/app/db ./db
 COPY --from=builder /usr/src/app/tsconfig.json ./tsconfig.json
 CMD [ "npm", "run", "start:dev" ]
