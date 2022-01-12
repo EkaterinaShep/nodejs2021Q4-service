@@ -11,7 +11,7 @@
     "build": "tsc -p ./tsconfig.json",
     "build:watch": "tsc -p ./tsconfig.json -w",
     "start:prod": "node build/app.js",
-    "start:dev": "(npm run build) && (concurrently --kill-others \"npm run build:watch\" \"nodemon -L --exitcrash build/app.js\")",
+    "start:dev": "(npm run build) && (concurrently --kill-others \"npm run build:watch\" \"nodemon -L build/app.js\")",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace"
