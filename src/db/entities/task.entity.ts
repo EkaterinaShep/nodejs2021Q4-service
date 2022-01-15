@@ -1,25 +1,51 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  BaseEntity,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { BoardEntity } from './board.entity';
+import { ColumnEntity } from './column.entity';
+import UserEntity from './user.entity';
 
 @Entity()
-export default class TaskEntity {
+export default class TaskEntity extends BaseEntity {
   @PrimaryColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column('text')
   title!: string;
 
-  @Column()
+  @Column('int')
   order!: number;
 
-  @Column()
+  @Column('text')
   description!: string;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('uuid', { nullable: true })
   userId!: string | null;
 
-  @Column({ nullable: true, type: 'text' })
-  boardId!: string | null;
+  @ManyToOne(() => UserEntity, (user) => user.tasks, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'userId', referencedColumnName: 'id' })
+  user!: UserEntity;
 
-  @Column({ nullable: true, type: 'text' })
+  @Column('uuid')
+  boardId!: string;
+
+  @ManyToOne(() => BoardEntity, (board) => board.tasks, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'boardId', referencedColumnName: 'id' })
+  board!: BoardEntity;
+
+  @Column('uuid', { nullable: true })
   columnId!: string | null;
+
+  @ManyToOne(() => ColumnEntity, (column) => column.tasks, {
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'columnId', referencedColumnName: 'id' })
+  column!: ColumnEntity;
 }

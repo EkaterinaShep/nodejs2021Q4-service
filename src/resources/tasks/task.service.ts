@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { NotFoundError } from '../../errors/custom-errors/not-found-error';
 import * as taskRepo from './task.repository';
-import { TaskBody, TaskModel } from './task.types';
+import { TaskBody } from './task.types';
 
 /**
  * Returns all tasks of a board with given ID. Tasks are received from a task repository
@@ -40,7 +40,7 @@ async function getOneTask(id: string) {
  * @returns Task item
  */
 async function addTask(parsedReqBody: TaskBody, boardId: string) {
-  const task: TaskModel = { id: randomUUID(), ...parsedReqBody, boardId };
+  const task = { id: randomUUID(), ...parsedReqBody, boardId };
 
   await taskRepo.addTask(task);
 

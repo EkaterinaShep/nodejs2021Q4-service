@@ -58,8 +58,6 @@ async function updateBoard(req: BoardPutReq, reply: FastifyReply) {
   const id = req.params.boardId;
   const parsedReqBody = req.body;
 
-  console.log(parsedReqBody);
-
   const updatedBoard = await boardService.updateBoard(id, parsedReqBody);
 
   reply.send(updatedBoard);

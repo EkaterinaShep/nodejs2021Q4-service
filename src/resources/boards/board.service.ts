@@ -1,9 +1,7 @@
 import { randomUUID } from 'crypto';
 import * as boardRepo from './board.repository';
-import * as taskRepo from '../tasks/task.repository';
 import { BoardBody } from './board.types';
 import { NotFoundError } from '../../errors/custom-errors/not-found-error';
-import { BoardEntity } from '../../db/entities/board.entity';
 
 /**
  * Returns all board items received from a board repository
@@ -43,7 +41,7 @@ async function getOneBoard(id: string) {
 async function addBoard(reqBody: BoardBody) {
   const board = { id: randomUUID(), ...reqBody };
 
-  await boardRepo.addBoard(board as unknown as BoardEntity);
+  await boardRepo.addBoard(board);
 
   return board;
 }
@@ -57,11 +55,7 @@ async function addBoard(reqBody: BoardBody) {
  * @returns Updated board item, object with the type {@link BoardModel} received from the board repository
  */
 async function updateBoard(id: string, newProperties: BoardBody) {
-  const updatedBoard = await boardRepo.updateBoard(
-    id,
-    newProperties as unknown as Partial<BoardEntity>
-  );
-  console.log(updatedBoard);
+  const updatedBoard = await boardRepo.updateBoard(id, newProperties);
 
   return updatedBoard;
 }
@@ -73,8 +67,6 @@ async function updateBoard(id: string, newProperties: BoardBody) {
  */
 async function deleteBoard(id: string) {
   await boardRepo.deleteBoard(id);
-
-  await taskRepo.deleteTasks(id);
 }
 
 export { getAllBoards, getOneBoard, addBoard, updateBoard, deleteBoard };

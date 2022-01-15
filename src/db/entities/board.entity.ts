@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryColumn, OneToMany, BaseEntity } from 'typeorm';
 import { ColumnEntity } from './column.entity';
+import TaskEntity from './task.entity';
 
 @Entity()
 export class BoardEntity extends BaseEntity {
@@ -13,4 +14,7 @@ export class BoardEntity extends BaseEntity {
     cascade: true,
   })
   columns?: ColumnEntity[];
+
+  @OneToMany(() => TaskEntity, (task) => task.board)
+  tasks?: TaskEntity[];
 }

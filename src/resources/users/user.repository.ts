@@ -5,7 +5,7 @@ import { UserModel } from './user.types';
 /**
  * Returns all users stored in the database
  *
- *  @returns Array of users. Each user is an object with type {@link UserModel}
+ *  @returns Array of users. Each user is an object with type {@link UserEntity}
  */
 async function getAllUsers() {
   return getConnection().getRepository(UserEntity).find();
@@ -15,7 +15,7 @@ async function getAllUsers() {
  * Returns a user with given ID stored in the database
  *
  * @param id - id of the target user
- * @returns Object with the type {@link UserModel} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
+ * @returns Object with the type {@link UserEntity} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
  */
 async function getOneUser(id: string) {
   return getConnection().getRepository(UserEntity).findOne({ where: { id } });
@@ -40,7 +40,7 @@ async function addUser(user: UserModel) {
  *
  * @param id - id of the target user
  * @param newProperties - object that contains properties that should be updated in the user
- * @returns Updated user, object with the type {@link UserModel} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
+ * @returns Updated user, object with the type {@link UserEntity} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
  */
 async function updateUser(id: string, newProperties: Partial<UserModel>) {
   await getConnection()

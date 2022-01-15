@@ -1,5 +1,12 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 import { BoardEntity } from './board.entity';
+import TaskEntity from './task.entity';
 
 @Entity()
 export class ColumnEntity {
@@ -16,4 +23,7 @@ export class ColumnEntity {
     onDelete: 'CASCADE',
   })
   board!: BoardEntity;
+
+  @OneToMany(() => TaskEntity, (task) => task.column)
+  tasks!: TaskEntity[];
 }

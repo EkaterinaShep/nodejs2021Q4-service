@@ -1,10 +1,11 @@
 import { getConnection } from 'typeorm';
 import { BoardEntity } from '../../db/entities/board.entity';
+import { BoardModel } from './board.types';
 
 /**
  * Returns all board items stored in the database
  *
- * @returns Array of boards. Each board is an object with type {@link BoardModel}
+ * @returns Array of boards. Each board is an object with type {@link BoardEntity}
  */
 async function getAllBoards() {
   const boardRepo = getConnection().getRepository(BoardEntity);
@@ -17,7 +18,7 @@ async function getAllBoards() {
  *
  * @param id - id of the target board item
  *
- * @returns Object with the type {@link BoardModel} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
+ * @returns Object with the type {@link BoardEntity} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
  */
 async function getOneBoard(id: string) {
   const boardRepo = getConnection().getRepository(BoardEntity);
@@ -30,12 +31,12 @@ async function getOneBoard(id: string) {
  *
  * @param board - object that has the type {@link BoardModel}
  */
-async function addBoard(board: BoardEntity) {
+async function addBoard(board: BoardModel) {
   await getConnection()
     .createQueryBuilder()
     .insert()
     .into(BoardEntity)
-    .values([board])
+    .values([board as unknown as BoardEntity])
     .execute();
 }
 
@@ -45,9 +46,9 @@ async function addBoard(board: BoardEntity) {
  * @param id - id of the target board item
  * @param newProperties - object that contains properties that should be updated in the board item
  *
- * @returns Updated board item, object with the type {@link BoardModel} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
+ * @returns Updated board item, object with the type {@link BoardEntity} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
  */
-async function updateBoard(id: string, newProperties: Partial<BoardEntity>) {
+async function updateBoard(id: string, newProperties: Partial<BoardModel>) {
   const board = await getOneBoard(id);
 
   Object.assign(board, newProperties);
