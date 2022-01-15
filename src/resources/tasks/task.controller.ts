@@ -16,9 +16,7 @@ import {
  * @param reply - Fastify Reply object
  */
 async function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
-  const { boardId } = req.params;
-
-  const tasks = await taskService.getAllTasks(boardId);
+  const tasks = await taskService.getAllTasks();
 
   reply.send(tasks);
 }

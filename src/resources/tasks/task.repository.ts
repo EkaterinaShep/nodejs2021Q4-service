@@ -8,7 +8,7 @@ import { TaskModel } from './task.types';
  * @param boardId - id of the target board
  * @returns Array of tasks. Each task is an object with type {@link TaskEntity}
  */
-async function getAllTasks(_boardId: string) {
+async function getAllTasks() {
   return getConnection().getRepository(TaskEntity).find();
 }
 

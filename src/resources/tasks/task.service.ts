@@ -9,8 +9,8 @@ import { TaskBody } from './task.types';
  * @param boardId - id of the target board item
  * @returns Array of tasks received from the task repository. Each task is an object with type {@link TaskModel}
  */
-async function getAllTasks(boardId: string) {
-  return taskRepo.getAllTasks(boardId);
+async function getAllTasks() {
+  return taskRepo.getAllTasks();
 }
 
 /**
