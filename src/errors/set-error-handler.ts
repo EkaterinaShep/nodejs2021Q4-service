@@ -10,6 +10,8 @@ function setErrorHandler(server: FastifyInstance) {
       reply.send(err);
     }
 
+    console.log(err);
+
     logAppError(server, err, reply);
   });
 }

@@ -1,4 +1,5 @@
-import * as db from '../../db/db';
+import { getConnection } from 'typeorm';
+import UserEntity from '../../db/entities/user.entity';
 import { UserModel } from './user.types';
 
 /**
@@ -6,8 +7,8 @@ import { UserModel } from './user.types';
  *
  *  @returns Array of users. Each user is an object with type {@link UserModel}
  */
-function getAllUsers() {
-  return db.getAll('users');
+async function getAllUsers() {
+  return getConnection().getRepository(UserEntity).find();
 }
 
 /**
@@ -16,8 +17,8 @@ function getAllUsers() {
  * @param id - id of the target user
  * @returns Object with the type {@link UserModel} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
  */
-function getOneUser(id: string) {
-  return db.findOne('users', id, 'id');
+async function getOneUser(id: string) {
+  return getConnection().getRepository(UserEntity).findOne({ where: { id } });
 }
 
 /**
@@ -25,8 +26,13 @@ function getOneUser(id: string) {
  *
  * @param user - object that has the type {@link UserModel}
  */
-function addUser(user: UserModel) {
-  db.addItem('users', user);
+async function addUser(user: UserModel) {
+  await getConnection()
+    .createQueryBuilder()
+    .insert()
+    .into(UserEntity)
+    .values([user])
+    .execute();
 }
 
 /**
@@ -36,8 +42,15 @@ function addUser(user: UserModel) {
  * @param newProperties - object that contains properties that should be updated in the user
  * @returns Updated user, object with the type {@link UserModel} that has specified ID. If there isn't a user with given ID in the database, the method returns undefined
  */
-function updateUser(id: string, newProperties: Partial<UserModel>) {
-  return db.findAndUpdate('users', id, 'id', newProperties);
+async function updateUser(id: string, newProperties: Partial<UserModel>) {
+  await getConnection()
+    .createQueryBuilder()
+    .update(UserEntity)
+    .set(newProperties)
+    .where('id = :id', { id })
+    .execute();
+
+  return getOneUser(id);
 }
 
 /**
@@ -45,8 +58,13 @@ function updateUser(id: string, newProperties: Partial<UserModel>) {
  *
  * @param id - id of the target user
  */
-function deleteUser(id: string) {
-  db.deleteOne('users', id, 'id');
+async function deleteUser(id: string) {
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(UserEntity)
+    .where('id = :id', { id })
+    .execute();
 }
 
 export { getAllUsers, getOneUser, addUser, updateUser, deleteUser };

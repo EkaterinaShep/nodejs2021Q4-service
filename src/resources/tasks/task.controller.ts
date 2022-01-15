@@ -15,10 +15,10 @@ import {
  * @param req - Fastify Request object with type {@link TaskGetAllReq}
  * @param reply - Fastify Reply object
  */
-function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
+async function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
   const { boardId } = req.params;
 
-  const tasks = taskService.getAllTasks(boardId);
+  const tasks = await taskService.getAllTasks(boardId);
 
   reply.send(tasks);
 }
@@ -29,10 +29,10 @@ function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link TaskGetByIdReq}
  * @param reply - Fastify Reply object
  */
-function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
+async function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
-  const task = taskService.getOneTask(id);
+  const task = await taskService.getOneTask(id);
 
   reply.send(task);
 }
@@ -43,12 +43,12 @@ function getOneTask(req: TaskGetByIdReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link TaskPostReq}
  * @param reply - Fastify Reply object
  */
-function addTask(req: TaskPostReq, reply: FastifyReply) {
+async function addTask(req: TaskPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
   const { boardId } = req.params;
 
-  const task = taskService.addTask(parsedReqBody, boardId);
+  const task = await taskService.addTask(parsedReqBody, boardId);
 
   reply.code(codes.created).send(task);
 }
@@ -59,12 +59,12 @@ function addTask(req: TaskPostReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link TaskPutReq}
  * @param reply - Fastify Reply object
  */
-function updateTask(req: TaskPutReq, reply: FastifyReply) {
+async function updateTask(req: TaskPutReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
   const parsedReqBody = req.body;
 
-  const updatedTask = taskService.updateTask(id, parsedReqBody);
+  const updatedTask = await taskService.updateTask(id, parsedReqBody);
 
   reply.send(updatedTask);
 }
@@ -75,10 +75,10 @@ function updateTask(req: TaskPutReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link TaskDeleteReq}
  * @param reply - Fastify Reply object
  */
-function deleteTask(req: TaskDeleteReq, reply: FastifyReply) {
+async function deleteTask(req: TaskDeleteReq, reply: FastifyReply) {
   const id = req.params.taskId;
 
-  taskService.deleteTask(id);
+  await taskService.deleteTask(id);
 
   reply.code(codes.noContent).send();
 }

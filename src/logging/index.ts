@@ -48,7 +48,7 @@ function logErrToErrFileAsync(content: string) {
 function addReqLogging(server: FastifyInstance) {
   server.addHook('preHandler', (req, _reply, done) => {
     const { method, url, params, body, query } = req;
-    
+
     req.log.info(
       `Received ${method} request to ${url} with params: ${JSON.stringify(
         params

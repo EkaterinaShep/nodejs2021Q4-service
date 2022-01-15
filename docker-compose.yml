@@ -7,7 +7,7 @@ services:
     ports:
       - ${PORT}:${PORT}
     depends_on:
-      - postrgres
+      - postgres
     environment:
       - PORT=${PORT}
       - HOST=${HOST}
@@ -18,7 +18,7 @@ services:
     networks:
       - user-defined
     restart: on-failure
-  postrgres:
+  postgres:
     build: ./db/
     image: ekaterinashep/db
     ports:
@@ -33,8 +33,8 @@ services:
       - user-defined
     restart: on-failure
 volumes:
-    db-data:
-    logs:
+  db-data:
+  logs:
 #   nodemodules: {}
 networks:
   user-defined:

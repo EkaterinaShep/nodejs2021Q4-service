@@ -23,4 +23,4 @@ const boardModelSchema = {
   },
 } as const;
 
-export { boardModelSchema };
+export { boardModelSchema, columnModelSchema };

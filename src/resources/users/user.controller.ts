@@ -14,8 +14,8 @@ import {
  * @param _req - Fastify Request object
  * @param reply - Fastify Reply object
  */
-function getAllUsers(_req: FastifyRequest, reply: FastifyReply) {
-  const users = userService.getAllUsers();
+async function getAllUsers(_req: FastifyRequest, reply: FastifyReply) {
+  const users = await userService.getAllUsers();
 
   reply.send(users);
 }
@@ -26,10 +26,10 @@ function getAllUsers(_req: FastifyRequest, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link UserGetByIdReq}
  * @param reply - Fastify Reply object
  */
-function getOneUser(req: UserGetByIdReq, reply: FastifyReply) {
+async function getOneUser(req: UserGetByIdReq, reply: FastifyReply) {
   const id = req.params.userId;
 
-  const user = userService.getOneUser(id);
+  const user = await userService.getOneUser(id);
 
   reply.send(user);
 }
@@ -40,10 +40,10 @@ function getOneUser(req: UserGetByIdReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link UserPostReq}
  * @param reply - Fastify Reply object
  */
-function addUser(req: UserPostReq, reply: FastifyReply) {
+async function addUser(req: UserPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
-  const user = userService.addUser(parsedReqBody);
+  const user = await userService.addUser(parsedReqBody);
 
   reply.code(codes.created).send(user);
 }
@@ -54,12 +54,12 @@ function addUser(req: UserPostReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link UserPutReq}
  * @param reply - Fastify Reply object
  */
-function updateUser(req: UserPutReq, reply: FastifyReply) {
+async function updateUser(req: UserPutReq, reply: FastifyReply) {
   const id = req.params.userId;
 
   const parsedReqBody = req.body;
 
-  const updatedUser = userService.updateUser(id, parsedReqBody);
+  const updatedUser = await userService.updateUser(id, parsedReqBody);
 
   reply.send(updatedUser);
 }
@@ -70,10 +70,10 @@ function updateUser(req: UserPutReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link UserDeleteReq}
  * @param reply - Fastify Reply object
  */
-function deleteUser(req: UserDeleteReq, reply: FastifyReply) {
+async function deleteUser(req: UserDeleteReq, reply: FastifyReply) {
   const id = req.params.userId;
 
-  userService.deleteUser(id);
+  await userService.deleteUser(id);
 
   reply.code(codes.noContent).send();
 }

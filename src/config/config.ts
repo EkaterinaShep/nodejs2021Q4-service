@@ -2,6 +2,7 @@ import process from 'process';
 import dotenv from 'dotenv';
 import path from 'path';
 import { logLevels } from '../constants/constants';
+import { ConnectionOptions } from 'typeorm';
 
 dotenv.config();
 
@@ -13,6 +14,18 @@ const LOG_LEVEL =
   (process.env['LOG_LEVEL'] as unknown as keyof typeof logLevels) || '5';
 const LOG_LEVEL_NAME = logLevels[LOG_LEVEL];
 
+const connectionOptions = {
+  type: 'postgres',
+  host: process.env['POSTGRES_HOST'] || 'postgres',
+  port: process.env['POSTGRES_PORT'] || 5432,
+  username: process.env['POSTGRES_USER'] || 'postgres',
+  password: process.env['POSTGRES_PASSWORD'] || 'postgres',
+  database: process.env['POSTGRES_DB'] || 'postgres',
+  dropSchema: true,
+  synchronize: true,
+  entities: [process.env['TYPEORM_ENTITIES']] || ['./build/**/*.entity.js'],
+} as ConnectionOptions;
+
 export {
   PORT,
   HOST,
@@ -20,4 +33,5 @@ export {
   ALL_LOG_DATA_FILE_PATH,
   LOG_LEVEL,
   LOG_LEVEL_NAME,
+  connectionOptions,
 };

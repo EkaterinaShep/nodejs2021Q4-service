@@ -3,13 +3,14 @@ import * as boardRepo from './board.repository';
 import * as taskRepo from '../tasks/task.repository';
 import { BoardBody } from './board.types';
 import { NotFoundError } from '../../errors/custom-errors/not-found-error';
+import { BoardEntity } from '../../db/entities/board.entity';
 
 /**
  * Returns all board items received from a board repository
  *
  * @returns Array of boards received from the board repository. Each board is an object with type {@link BoardModel}
  */
-function getAllBoards() {
+async function getAllBoards() {
   return boardRepo.getAllBoards();
 }
 
@@ -22,8 +23,8 @@ function getAllBoards() {
  * @throws {@link NotFoundError}
  * Thrown if there isn't a board item with given ID
  */
-function getOneBoard(id: string) {
-  const board = boardRepo.getOneBoard(id);
+async function getOneBoard(id: string) {
+  const board = await boardRepo.getOneBoard(id);
 
   if (!board) {
     throw new NotFoundError(`board with id '${id}' was not found`);
@@ -39,10 +40,10 @@ function getOneBoard(id: string) {
  *
  * @returns Board item
  */
-function addBoard(reqBody: BoardBody) {
+async function addBoard(reqBody: BoardBody) {
   const board = { id: randomUUID(), ...reqBody };
 
-  boardRepo.addBoard(board);
+  await boardRepo.addBoard(board as unknown as BoardEntity);
 
   return board;
 }
@@ -55,8 +56,12 @@ function addBoard(reqBody: BoardBody) {
  *
  * @returns Updated board item, object with the type {@link BoardModel} received from the board repository
  */
-function updateBoard(id: string, newProperties: BoardBody) {
-  const updatedBoard = boardRepo.updateBoard(id, newProperties);
+async function updateBoard(id: string, newProperties: BoardBody) {
+  const updatedBoard = await boardRepo.updateBoard(
+    id,
+    newProperties as unknown as Partial<BoardEntity>
+  );
+  console.log(updatedBoard);
 
   return updatedBoard;
 }
@@ -66,10 +71,10 @@ function updateBoard(id: string, newProperties: BoardBody) {
  *
  * @param id - id of the target board item
  */
-function deleteBoard(id: string) {
-  boardRepo.deleteBoard(id);
+async function deleteBoard(id: string) {
+  await boardRepo.deleteBoard(id);
 
-  taskRepo.deleteTasks(id);
+  await taskRepo.deleteTasks(id);
 }
 
 export { getAllBoards, getOneBoard, addBoard, updateBoard, deleteBoard };

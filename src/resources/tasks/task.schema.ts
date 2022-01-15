@@ -46,7 +46,7 @@ const taskParamsWithoutTaskIdSchema = {
 const taskResponseSchema = {
   '2xx': {
     type: 'object',
-    required: ['id', 'title', 'order', 'description', 'userId', 'boardId'],
+    // required: ['id', 'title', 'order', 'description', 'userId', 'boardId'],
     properties: {
       id: {
         type: 'string',

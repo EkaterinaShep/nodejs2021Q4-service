@@ -1,13 +1,15 @@
-import * as db from '../../db/db';
-import { BoardModel } from './board.types';
+import { getConnection } from 'typeorm';
+import { BoardEntity } from '../../db/entities/board.entity';
 
 /**
  * Returns all board items stored in the database
  *
  * @returns Array of boards. Each board is an object with type {@link BoardModel}
  */
-function getAllBoards() {
-  return db.getAll('boards');
+async function getAllBoards() {
+  const boardRepo = getConnection().getRepository(BoardEntity);
+
+  return boardRepo.find({ relations: ['columns'] });
 }
 
 /**
@@ -17,8 +19,10 @@ function getAllBoards() {
  *
  * @returns Object with the type {@link BoardModel} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
  */
-function getOneBoard(id: string) {
-  return db.findOne('boards', id, 'id');
+async function getOneBoard(id: string) {
+  const boardRepo = getConnection().getRepository(BoardEntity);
+
+  return boardRepo.findOne({ where: { id }, relations: ['columns'] });
 }
 
 /**
@@ -26,8 +30,13 @@ function getOneBoard(id: string) {
  *
  * @param board - object that has the type {@link BoardModel}
  */
-function addBoard(board: BoardModel) {
-  db.addItem('boards', board);
+async function addBoard(board: BoardEntity) {
+  await getConnection()
+    .createQueryBuilder()
+    .insert()
+    .into(BoardEntity)
+    .values([board])
+    .execute();
 }
 
 /**
@@ -38,8 +47,14 @@ function addBoard(board: BoardModel) {
  *
  * @returns Updated board item, object with the type {@link BoardModel} that has specified ID. If there isn't a board item with given ID in the database, the method returns undefined
  */
-function updateBoard(id: string, newProperties: Partial<BoardModel>) {
-  return db.findAndUpdate('boards', id, 'id', newProperties);
+async function updateBoard(id: string, newProperties: Partial<BoardEntity>) {
+  const board = await getOneBoard(id);
+
+  Object.assign(board, newProperties);
+
+  await board?.save();
+
+  return board;
 }
 
 /**
@@ -47,8 +62,13 @@ function updateBoard(id: string, newProperties: Partial<BoardModel>) {
  *
  * @param id - id of the target board item
  */
-function deleteBoard(id: string) {
-  db.deleteOne('boards', id, 'id');
+async function deleteBoard(id: string) {
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(BoardEntity)
+    .where('id = :id', { id })
+    .execute();
 }
 
 export { getAllBoards, getOneBoard, addBoard, updateBoard, deleteBoard };

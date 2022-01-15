@@ -9,7 +9,7 @@ import { TaskBody, TaskModel } from './task.types';
  * @param boardId - id of the target board item
  * @returns Array of tasks received from the task repository. Each task is an object with type {@link TaskModel}
  */
-function getAllTasks(boardId: string) {
+async function getAllTasks(boardId: string) {
   return taskRepo.getAllTasks(boardId);
 }
 
@@ -22,8 +22,8 @@ function getAllTasks(boardId: string) {
  * @throws {@link NotFoundError}
  * Thrown if there isn't a task with given ID
  */
-function getOneTask(id: string) {
-  const task = taskRepo.getOneTask(id);
+async function getOneTask(id: string) {
+  const task = await taskRepo.getOneTask(id);
 
   if (!task) {
     throw new NotFoundError(`task with id '${id}' was not found`);
@@ -39,10 +39,10 @@ function getOneTask(id: string) {
  * @param boardId - id of a board to which the task must be added
  * @returns Task item
  */
-function addTask(parsedReqBody: TaskBody, boardId: string) {
+async function addTask(parsedReqBody: TaskBody, boardId: string) {
   const task: TaskModel = { id: randomUUID(), ...parsedReqBody, boardId };
 
-  taskRepo.addTask(task);
+  await taskRepo.addTask(task);
 
   return task;
 }
@@ -54,8 +54,8 @@ function addTask(parsedReqBody: TaskBody, boardId: string) {
  * @param newProperties - object that contains properties that should be updated in the task with specified ID
  * @returns Updated task, object with the type {@link TaskModel} received from the task repository
  */
-function updateTask(id: string, newProperties: TaskBody) {
-  const updatedTask = taskRepo.updateTask(id, newProperties);
+async function updateTask(id: string, newProperties: TaskBody) {
+  const updatedTask = await taskRepo.updateTask(id, newProperties);
 
   return updatedTask;
 }
@@ -65,8 +65,8 @@ function updateTask(id: string, newProperties: TaskBody) {
  *
  * @param id - id of the target task
  */
-function deleteTask(id: string) {
-  taskRepo.deleteTask(id);
+async function deleteTask(id: string) {
+  await taskRepo.deleteTask(id);
 }
 
 export { getAllTasks, getOneTask, addTask, updateTask, deleteTask };

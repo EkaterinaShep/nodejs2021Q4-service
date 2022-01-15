@@ -1,9 +1,11 @@
 import { FastifyRequest } from 'fastify';
 import { FromSchema } from 'json-schema-to-ts';
-import { boardModelSchema } from './board.model';
+import { boardModelSchema, columnModelSchema } from './board.model';
 import { boardSchema } from './board.schema';
 
 type BoardModel = FromSchema<typeof boardModelSchema>;
+type ColumnModel = FromSchema<typeof columnModelSchema>;
+
 type BoardBody = FromSchema<typeof boardSchema.body>;
 type BoardParams = FromSchema<typeof boardSchema.params>;
 type BoardResponse = FromSchema<typeof boardSchema.response['2xx']>;
@@ -27,6 +29,7 @@ type BoardDeleteReq = FastifyRequest<{
 
 export {
   BoardModel,
+  ColumnModel,
   BoardBody,
   BoardParams,
   BoardResponse,

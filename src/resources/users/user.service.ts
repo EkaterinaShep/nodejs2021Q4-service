@@ -8,7 +8,7 @@ import { UserBody } from './user.types';
  *
  * @returns Array of users received from the user repository
  */
-function getAllUsers() {
+async function getAllUsers() {
   return userRepo.getAllUsers();
 }
 
@@ -18,7 +18,7 @@ function getAllUsers() {
  * @param id - id of the target user
  * @returns User item. If there isn't a user with given ID, the method returns undefined
  */
-function getOneUser(id: string) {
+async function getOneUser(id: string) {
   return userRepo.getOneUser(id);
 }
 
@@ -28,10 +28,10 @@ function getOneUser(id: string) {
  * @param parsedReqBody - object received via request that contains all necessary properties for adding to the database except for ID
  * @returns User item
  */
-function addUser(parsedReqBody: UserBody) {
+async function addUser(parsedReqBody: UserBody) {
   const user = { id: randomUUID(), ...parsedReqBody };
 
-  userRepo.addUser(user);
+  await userRepo.addUser(user);
 
   return user;
 }
@@ -43,7 +43,7 @@ function addUser(parsedReqBody: UserBody) {
  * @param newProperties - object that contains properties that should be updated in the user with specified ID
  * @returns Updated user received from the user repository
  */
-function updateUser(id: string, newProperties: UserBody) {
+async function updateUser(id: string, newProperties: UserBody) {
   return userRepo.updateUser(id, newProperties);
 }
 
@@ -52,10 +52,10 @@ function updateUser(id: string, newProperties: UserBody) {
  *
  * @param id - id of the target user
  */
-function deleteUser(id: string) {
-  userRepo.deleteUser(id);
+async function deleteUser(id: string) {
+  await userRepo.deleteUser(id);
 
-  taskRepo.updateTasks(id, { userId: null });
+  await taskRepo.updateTasks(id, { userId: null });
 }
 
 export { getAllUsers, getOneUser, addUser, updateUser, deleteUser };

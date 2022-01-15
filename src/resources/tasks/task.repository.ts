@@ -1,4 +1,5 @@
-import * as db from '../../db/db';
+import { getConnection } from 'typeorm';
+import TaskEntity from '../../db/entities/task.entity';
 import { TaskModel } from './task.types';
 
 /**
@@ -7,8 +8,8 @@ import { TaskModel } from './task.types';
  * @param boardId - id of the target board
  * @returns Array of tasks. Each task is an object with type {@link TaskModel}
  */
-function getAllTasks(boardId: string) {
-  return db.getAll('tasks', boardId, 'boardId');
+async function getAllTasks(_boardId: string) {
+  return getConnection().getRepository(TaskEntity).find();
 }
 
 /**
@@ -17,8 +18,8 @@ function getAllTasks(boardId: string) {
  * @param id - id of the target task
  * @returns Object with the type {@link TaskModel} that has specified ID. If there isn't a task with given ID in the database, the method returns undefined
  */
-function getOneTask(id: string) {
-  return db.findOne('tasks', id, 'id');
+async function getOneTask(id: string) {
+  return getConnection().getRepository(TaskEntity).findOne({ where: { id } });
 }
 
 /**
@@ -26,8 +27,13 @@ function getOneTask(id: string) {
  *
  * @param task - object that has the type {@link TaskModel}
  */
-function addTask(task: TaskModel) {
-  db.addItem('tasks', task);
+async function addTask(task: TaskModel) {
+  await getConnection()
+    .createQueryBuilder()
+    .insert()
+    .into(TaskEntity)
+    .values([task])
+    .execute();
 }
 
 /**
@@ -37,8 +43,15 @@ function addTask(task: TaskModel) {
  * @param newProperties - object that contains properties that should be updated in the target task
  * @returns Updated task, object with the type {@link TaskModel} that has specified ID. If there isn't a task with given ID in the database, the method returns undefined
  */
-function updateTask(id: string, newProperties: Partial<TaskModel>) {
-  return db.findAndUpdate('tasks', id, 'id', newProperties);
+async function updateTask(id: string, newProperties: Partial<TaskModel>) {
+  await getConnection()
+    .createQueryBuilder()
+    .update(TaskEntity)
+    .set(newProperties)
+    .where('id = :id', { id })
+    .execute();
+
+  return getOneTask(id);
 }
 
 /**
@@ -46,8 +59,13 @@ function updateTask(id: string, newProperties: Partial<TaskModel>) {
  *
  * @param id - id of the target task
  */
-function deleteTask(id: string) {
-  db.deleteOne('tasks', id, 'id');
+async function deleteTask(id: string) {
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(TaskEntity)
+    .where('id = :id', { id })
+    .execute();
 }
 
 /**
@@ -55,8 +73,13 @@ function deleteTask(id: string) {
  *
  * @param boardId - id of the target board
  */
-function deleteTasks(boardId: string) {
-  db.deleteMany('tasks', boardId, 'boardId');
+async function deleteTasks(boardId: string) {
+  await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(TaskEntity)
+    .where('boardId = :boardId', { boardId })
+    .execute();
 }
 
 /**
@@ -65,8 +88,13 @@ function deleteTasks(boardId: string) {
  * @param userId - id of the target user
  * @param newIdProp - object with userId field. Value of the field should be null
  */
-function updateTasks(userId: string, newIdProp: { userId: null }) {
-  db.findAndUpdateMany('tasks', userId, 'userId', newIdProp);
+async function updateTasks(userId: string, newIdProp: { userId: null }) {
+  await getConnection()
+    .createQueryBuilder()
+    .update(TaskEntity)
+    .set(newIdProp)
+    .where('userId = :userId', { userId })
+    .execute();
 }
 
 export {

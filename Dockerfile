@@ -13,4 +13,5 @@ RUN npm i -g nodemon && npm i -g typescript && npm i -g concurrently
 COPY --from=builder /usr/src/app/logs ./logs
 COPY --from=builder /usr/src/app/db ./db
 COPY --from=builder /usr/src/app/tsconfig.json ./tsconfig.json
+COPY --from=builder /usr/src/app/.env ./.env
 CMD [ "npm", "run", "start:dev" ]

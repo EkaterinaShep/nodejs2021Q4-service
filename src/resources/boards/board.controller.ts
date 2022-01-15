@@ -14,8 +14,8 @@ import {
  * @param _req - Fastify Request object
  * @param reply - Fastify Reply object
  */
-function getAllBoards(_req: FastifyRequest, reply: FastifyReply) {
-  const boards = boardService.getAllBoards();
+async function getAllBoards(_req: FastifyRequest, reply: FastifyReply) {
+  const boards = await boardService.getAllBoards();
 
   reply.send(boards);
 }
@@ -26,10 +26,10 @@ function getAllBoards(_req: FastifyRequest, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link BoardGetByIdReq}
  * @param reply - Fastify Reply object
  */
-function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
+async function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
   const { boardId } = req.params;
 
-  const board = boardService.getOneBoard(boardId);
+  const board = await boardService.getOneBoard(boardId);
 
   reply.send(board);
 }
@@ -40,10 +40,10 @@ function getOneBoard(req: BoardGetByIdReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link BoardPostReq}
  * @param reply - Fastify Reply object
  */
-function addBoard(req: BoardPostReq, reply: FastifyReply) {
+async function addBoard(req: BoardPostReq, reply: FastifyReply) {
   const parsedReqBody = req.body;
 
-  const board = boardService.addBoard(parsedReqBody);
+  const board = await boardService.addBoard(parsedReqBody);
 
   reply.code(codes.created).send(board);
 }
@@ -54,11 +54,13 @@ function addBoard(req: BoardPostReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link BoardPutReq}
  * @param reply - Fastify Reply object
  */
-function updateBoard(req: BoardPutReq, reply: FastifyReply) {
+async function updateBoard(req: BoardPutReq, reply: FastifyReply) {
   const id = req.params.boardId;
   const parsedReqBody = req.body;
 
-  const updatedBoard = boardService.updateBoard(id, parsedReqBody);
+  console.log(parsedReqBody);
+
+  const updatedBoard = await boardService.updateBoard(id, parsedReqBody);
 
   reply.send(updatedBoard);
 }
@@ -69,10 +71,10 @@ function updateBoard(req: BoardPutReq, reply: FastifyReply) {
  * @param req - Fastify Request object with type {@link BoardDeleteReq}
  * @param reply - Fastify Reply object
  */
-function deleteBoard(req: BoardDeleteReq, reply: FastifyReply) {
+async function deleteBoard(req: BoardDeleteReq, reply: FastifyReply) {
   const id = req.params.boardId;
 
-  boardService.deleteBoard(id);
+  await boardService.deleteBoard(id);
 
   reply.code(codes.noContent).send();
 }
