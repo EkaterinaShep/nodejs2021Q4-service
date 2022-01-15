@@ -5,11 +5,16 @@ import { PORT, HOST, connectionOptions } from './config/config';
 import { userRoutes } from './resources/users/user.router';
 import { boardRoutes } from './resources/boards/board.router';
 import { taskRoutes } from './resources/tasks/task.router';
-import { addReqLogging, addResponseLogging, loggerOpts } from './logging';
+import {
+  addReqLogging,
+  addResponseLogging,
+  loggerOpts,
+  logErrToErrFileAsync,
+} from './logging';
 import { setErrorHandler } from './errors/set-error-handler';
 import { handleUncaughtExceptions } from './errors/handle-uncaught-exceptions';
 import { handleUnhandledRejection } from './errors/handle-unhandled-rejection';
-// import { BoardEntity } from './resources/boards/board.entity';
+import { formatDateTime } from './helpers/general-js';
 
 handleUncaughtExceptions();
 handleUnhandledRejection();
@@ -28,4 +33,9 @@ createConnection(connectionOptions)
   .then(() => {
     listenServer(server, PORT, HOST);
   })
-  .catch((err) => console.error(err));
+  .catch((err) => {
+    const formattedDateTime = formatDateTime(new Date());
+    const message = `[${formattedDateTime}] ERROR: ${err.name}: ${err.message}\n`;
+
+    logErrToErrFileAsync(message);
+  });

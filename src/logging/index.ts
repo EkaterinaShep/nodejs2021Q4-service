@@ -106,4 +106,5 @@ export {
   logFatalError,
   logAppError,
   logErrToErrFileSync,
+  logErrToErrFileAsync,
 };
