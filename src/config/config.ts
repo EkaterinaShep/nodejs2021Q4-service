@@ -17,7 +17,7 @@ const LOG_LEVEL_NAME = logLevels[LOG_LEVEL];
 const connectionOptions = {
   type: 'postgres',
   host: process.env['POSTGRES_HOST'] || 'postgres',
-  port: process.env['POSTGRES_PORT'] || 5432,
+  port: Number(process.env['POSTGRES_PORT']) || 5432,
   username: process.env['POSTGRES_USER'] || 'postgres',
   password: process.env['POSTGRES_PASSWORD'] || 'postgres',
   database: process.env['POSTGRES_DB'] || 'postgres',
