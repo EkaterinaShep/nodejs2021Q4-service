@@ -15,7 +15,7 @@ import {
  * @param req - Fastify Request object with type {@link TaskGetAllReq}
  * @param reply - Fastify Reply object
  */
-async function getAllTasks(req: TaskGetAllReq, reply: FastifyReply) {
+async function getAllTasks(_req: TaskGetAllReq, reply: FastifyReply) {
   const tasks = await taskService.getAllTasks();
 
   reply.send(tasks);

@@ -37,5 +37,6 @@ createConnection(connectionOptions)
     const formattedDateTime = formatDateTime(new Date());
     const message = `[${formattedDateTime}] ERROR: ${err.name}: ${err.message}\n`;
 
+    console.error(err);
     logErrToErrFileAsync(message);
   });

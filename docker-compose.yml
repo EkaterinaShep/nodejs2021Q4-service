@@ -4,6 +4,7 @@ services:
   node:
     build: .
     image: ekaterinashep/rest-service
+    container_name: ekaterinashep-task
     ports:
       - ${PORT}:${PORT}
     depends_on:
@@ -12,7 +13,6 @@ services:
       - PORT=${PORT}
       - HOST=${HOST}
     volumes:
-      #- nodemodules:/usr/src/app/node_modules
       - logs:/usr/src/app/logs
       - ./src:/usr/src/app/src
     networks:
@@ -35,7 +35,6 @@ services:
 volumes:
   db-data:
   logs:
-#   nodemodules: {}
 networks:
   user-defined:
     driver: bridge
