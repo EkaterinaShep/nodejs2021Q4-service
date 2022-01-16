@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  node:
+    build: .
+    image: ekaterinashep/rest-service
+    container_name: ekaterinashep-task
+    ports:
+      - ${PORT}:${PORT}
+    depends_on:
+      - postgres
+    environment:
+      - PORT=${PORT}
+      - HOST=${HOST}
+    volumes:
+      - logs:/usr/src/app/logs
+      - ./src:/usr/src/app/src
+    networks:
+      - user-defined
+    restart: on-failure
+  postgres:
+    build: ./db/
+    image: ekaterinashep/db
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - user-defined
+    restart: on-failure
+volumes:
+  db-data:
+  logs:
+networks:
+  user-defined:
+    driver: bridge

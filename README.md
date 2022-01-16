@@ -4,54 +4,88 @@
 
 - Git - [Download & Install Git](https://git-scm.com/downloads).
 - Node.js - [Download & Install Node.js](https://nodejs.org/en/download/) and the npm package manager.
+- Docker - [Download & Install Docker](https://hub.docker.com/search?q=&type=edition&offering=community).
+- Docker Compose - [Install Docker Compose](https://docs.docker.com/compose/install/), if necessary.
 
+## Working with Docker
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/EkaterinaShep/nodejs2021Q4-service
+   ```
+2. Go into the repository:
+   ```sh
+   cd nodejs2021Q4-service/
+   ```
+3. Switch branch:
+   ```sh
+   git checkout docker
+   ```
+4. Run one or some of the commands:
+   * Build, create, start and attach to containers for a service with building images before starting containers:
+      ```sh
+      docker-compose up --build
+      ```
+   * Stop running containers without removing them:
+      ```sh
+      docker-compose stop
+      ```
+   * List Docker images:
+      ```sh
+      docker images
+      ```
+   * Remove containers, networks, volumes, and images ([choose options](https://docs.docker.com/compose/reference/down/)):
+      ```sh
+      docker-compose down [options]
+      ```
 ## Downloading
 
-```
-git clone {repository URL}
+```sh
+git clone https://github.com/EkaterinaShep/nodejs2021Q4-service
 ```
 
 ## Installing NPM modules
 
-```
+```sh
 npm install
 ```
 
 ## Running application
+* In production mode
 
-```
-npm start
-```
+   ```sh
+   npm build
+   npm start:prod
+   ```
+* In development mode
 
-After starting the app on port (4000 as default) you can open
-in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
-For more information about OpenAPI/Swagger please visit https://swagger.io/.
-
+   ```sh
+   npm start:dev
+   ```
 ## Testing
 
 After application running open new terminal and enter:
 
 To run all tests without authorization
 
-```
+```sh
 npm test
 ```
 
 To run only one of all test suites (users, boards or tasks)
 
-```
+```sh
 npm test <suite name>
 ```
 
 To run all test with authorization
 
-```
+```sh
 npm run test:auth
 ```
 
 To run only specific test suite with authorization (users, boards or tasks)
 
-```
+```sh
 npm run test:auth <suite name>
 ```
 
@@ -61,7 +95,7 @@ If you're using VSCode, you can get a better developer experience from integrati
 
 ### Auto-fix and format
 
-```
+```sh
 npm run lint
 ```
 
